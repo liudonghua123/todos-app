@@ -3,11 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-// https://github.com/mui-org/material-ui/issues/6256
-import 'typeface-roboto';
-import 'material-design-icons/iconfont/material-icons.css';
 
-const rootEl = document.getElementById('root')
+const rootEl = document.getElementById('root');
 
 ReactDOM.render(<App />, rootEl);
 
@@ -19,11 +16,8 @@ serviceWorker.unregister();
 // https://medium.com/@brianhan/hot-reloading-cra-without-eject-b54af352c642
 // https://daveceddia.com/hot-reloading-create-react-app/
 if (module.hot) {
-    module.hot.accept('./App', () => {
-      const NextApp = require('./App').default
-      ReactDOM.render(
-        <NextApp />,
-        rootEl
-      )
-    })
-  }
+  module.hot.accept('./App', () => {
+    const NextApp = require('./App').default;
+    ReactDOM.render(<NextApp />, rootEl);
+  });
+}

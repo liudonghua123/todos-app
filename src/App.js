@@ -4,7 +4,7 @@ import './App.css';
 /**
  * App组件
  */
-class App extends Component {
+export default class App extends Component {
   /**
    * 构造函数
    */
@@ -21,8 +21,8 @@ class App extends Component {
       method: 'GET',
       mode: 'cors', // no-cors, cors, *same-origin
       headers: {
-        'Content-Type': 'application/json; charset=UTF-8'
-      }
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
     };
   }
 
@@ -40,18 +40,18 @@ class App extends Component {
   login = async () => {
     const loginData = {
       email: 'test@test.com',
-      password: 'test'
+      password: 'test',
     };
     try {
       // 获取 token
-      let response = await fetch(`${this.api_host}/api/users/login`, {
+      const response = await fetch(`${this.api_host}/api/users/login`, {
         ...this.commonFetchOptions,
         method: 'POST',
-        body: JSON.stringify(loginData)
+        body: JSON.stringify(loginData),
       });
       const { token } = await response.json();
       // 设置通用的ajax请求参数中请求头里面的Authorization
-      this.commonFetchOptions.headers['Authorization'] = token;
+      this.commonFetchOptions.headers.Authorization = token;
     } catch (e) {
       console.log(`Woops!, some error ${e.message} occurs`);
     }
@@ -62,15 +62,12 @@ class App extends Component {
    */
   loadTodoItems = async () => {
     try {
-      let response = await fetch(
-        `${this.api_host}/api/todos/`,
-        this.commonFetchOptions
-      );
+      let response = await fetch(`${this.api_host}/api/todos/`, this.commonFetchOptions);
       response = await response.json();
       const todoItems = response.data;
       console.info(`initial todoItems: ${JSON.stringify(todoItems)}`);
       this.setState({
-        todoItems
+        todoItems,
       });
       this.originTodoItems = todoItems;
     } catch (e) {
@@ -81,12 +78,12 @@ class App extends Component {
   /**
    * 添加 todoItem
    */
-  addTodoItem = async todoItem => {
+  addTodoItem = async (todoItem) => {
     try {
       let response = await fetch(`${this.api_host}/api/todos/`, {
         ...this.commonFetchOptions,
         method: 'POST',
-        body: JSON.stringify(todoItem)
+        body: JSON.stringify(todoItem),
       });
       response = await response.json();
       console.info(`added todoItem: ${JSON.stringify(response.data)}`);
@@ -99,12 +96,12 @@ class App extends Component {
   /**
    * 更新 todoItem
    */
-  updateTodoItem = async todoItem => {
+  updateTodoItem = async (todoItem) => {
     try {
       let response = await fetch(`${this.api_host}/api/todos/${todoItem._id}`, {
         ...this.commonFetchOptions,
         method: 'PUT',
-        body: JSON.stringify(todoItem)
+        body: JSON.stringify(todoItem),
       });
       response = await response.json();
       console.info(`updated todoItem: ${JSON.stringify(response.data)}`);
@@ -126,7 +123,7 @@ class App extends Component {
       let response = await fetch(`${this.api_host}/api/todos/`, {
         ...this.commonFetchOptions,
         method: 'DELETE',
-        body: JSON.stringify({ _ids: deleteIds })
+        body: JSON.stringify({ _ids: deleteIds }),
       });
       response = await response.json();
       console.info(`deleted todoItem: ${JSON.stringify(response.data)}`);
@@ -139,20 +136,20 @@ class App extends Component {
   /**
    * 输入框的 change 事件回调
    */
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({ todoText: e.target.value });
   };
 
   /**
    * 输入框点击Enter键，创建一个todo
    */
-  onCreateItem = e => {
+  onCreateItem = (e) => {
     if (e.key === 'Enter') {
       const { todoText, todoItems } = this.state;
       if (todoText.trim()) {
         const todoItem = {
           text: todoText,
-          isCompleted: false
+          isCompleted: false,
         };
         this.setState({ todoText: '' });
         this.addTodoItem(todoItem);
@@ -163,9 +160,9 @@ class App extends Component {
   /**
    * 改变 todo 的 isCompleted 状态的回调
    */
-  toggleCompleted = id => e => {
-    let { todoItems } = this.state;
-    let todoItem = todoItems.find(item => item._id == id);
+  toggleCompleted = id => (e) => {
+    const { todoItems } = this.state;
+    const todoItem = todoItems.find(item => item._id === id);
     todoItem.isCompleted = !todoItem.isCompleted;
     this.updateTodoItem(todoItem);
   };
@@ -182,7 +179,7 @@ class App extends Component {
    */
   filterActive = () => {
     this.setState({
-      todoItems: this.originTodoItems.filter(item => item.isCompleted == false)
+      todoItems: this.originTodoItems.filter(item => item.isCompleted === false),
     });
   };
 
@@ -191,7 +188,7 @@ class App extends Component {
    */
   filterCompleted = () => {
     this.setState({
-      todoItems: this.originTodoItems.filter(item => item.isCompleted == true)
+      todoItems: this.originTodoItems.filter(item => item.isCompleted === true),
     });
   };
 
@@ -222,10 +219,7 @@ class App extends Component {
           <label htmlFor="toggle-all">Mark all as complete</label>
           <ul id="todoContainer" className="todo-list">
             {this.state.todoItems.map(item => (
-              <li
-                className={item.isCompleted ? 'completed' : ''}
-                key={item._id}
-              >
+              <li className={item.isCompleted ? 'completed' : ''} key={item._id}>
                 <div className="view">
                   <input
                     className="toggle"
@@ -233,9 +227,7 @@ class App extends Component {
                     checked={item.isCompleted}
                     onChange={this.toggleCompleted(item._id)}
                   />
-                  <label onClick={this.toggleCompleted(item._id)}>
-                    {item.text}
-                  </label>
+                  <label onClick={this.toggleCompleted(item._id)}>{item.text}</label>
                   <button className="destroy" />
                 </div>
               </li>

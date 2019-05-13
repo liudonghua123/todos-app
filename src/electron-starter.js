@@ -27,8 +27,8 @@ function createWindow() {
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
 
-  
-  console.info(`networkInterfaces: ${JSON.stringify(networkInterfaces())}`)
+
+  console.info(`networkInterfaces: ${JSON.stringify(networkInterfaces())}`);
   mainWindow.webContents.send('networkInterfaces', networkInterfaces());
 
   // Emitted when the window is closed.
