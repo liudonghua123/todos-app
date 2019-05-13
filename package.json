@@ -14,7 +14,6 @@
     "electron-default-menu": "^1.0.1",
     "electron-squirrel-startup": "^1.0.0",
     "fs-extra": "^8.0.0",
-    "material-design-icons": "^3.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1",
@@ -59,7 +58,9 @@
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-react": "^7.13.0"
+    "eslint-plugin-react": "^7.13.0",
+    "foreman": "^3.0.1",
+    "typescript": "^3.4.5"
   },
   "build": {
     "appId": "com.liudonghua.todos-app",
@@ -69,7 +70,8 @@
     ],
     "win": {
       "artifactName": "${name}-${version}-${platform}-${arch}.${ext}",
-      "target": [{
+      "target": [
+        {
           "target": "nsis",
           "arch": [
             "x64",
@@ -87,22 +89,26 @@
     },
     "linux": {
       "artifactName": "${name}-${version}-${platform}-${arch}.${ext}",
-      "target": [{
-        "target": "zip",
-        "arch": [
-          "x64",
-          "ia32"
-        ]
-      }]
+      "target": [
+        {
+          "target": "zip",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ]
     },
     "mac": {
       "artifactName": "${name}-${version}-${platform}-${arch}.${ext}",
-      "target": [{
-        "target": "zip",
-        "arch": [
-          "x64"
-        ]
-      }]
+      "target": [
+        {
+          "target": "zip",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
     }
   }
 }
