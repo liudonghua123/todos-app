@@ -33,7 +33,9 @@
     "postinstall": "install-app-deps",
     "package": "electron-forge package",
     "make": "electron-forge make --arch=ia32,x64",
-    "publish": "electron-forge publish"
+    "publish": "electron-forge publish",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src"
   },
   "eslintConfig": {
     "extends": "react-app"
